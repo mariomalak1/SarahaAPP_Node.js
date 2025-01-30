@@ -32,5 +32,13 @@ export const UserModel = sequelize.define("User", {
                 message: "Password must be between 8 and 60 characters long"
             }
         }
-    }
-})
+    },
+    isVerfied: {
+        type: DataTypes.BOOLEAN,
+        default: false  
+    },
+    verfiyNum: {
+        type: DataTypes.STRING,
+        allowNull: true
+    } 
+});
