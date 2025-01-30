@@ -19,8 +19,12 @@ export const registerValidator = [
     
     check("password")
         .notEmpty()
-        .withMessage("password is required"),
-
+        .withMessage("password is required")
+        .isLength({min: 8})
+        .withMessage("password min len 8")
+        .isLength({max: 60})
+        .withMessage("password max len 60"),
+        
     validator
 ]
 

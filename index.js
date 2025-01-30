@@ -14,7 +14,7 @@ app.use(Express.json());
 
 // sequelize.sync({"force":true});
 
-app.use("/api/v2/", apiRouter);
+app.use("/api/v1", apiRouter);
 
 // handle invalid routers
 app.use("*", (req, res, next) => {
