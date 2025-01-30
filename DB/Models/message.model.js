@@ -1,6 +1,7 @@
 import {DataTypes} from "sequelize";
 
 import {sequelize} from "../dbConnection.js";
+import {UserModel} from "./user.model.js";
 
 export const MessageModel = sequelize.define("Message", {
     anonymousName : {
@@ -13,7 +14,6 @@ export const MessageModel = sequelize.define("Message", {
             }
         }
     },
-
     content: {
         type: DataTypes.TEXT,
         allowNull: false,
@@ -24,6 +24,8 @@ export const MessageModel = sequelize.define("Message", {
             }
         }
     }
-})
+});
 
+MessageModel.belongsTo(UserModel);
+UserModel.hasMany(MessageModel);
 
