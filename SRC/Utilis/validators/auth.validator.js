@@ -1,6 +1,7 @@
 import { param, check} from "express-validator";
 
 import validator from "../../Middlewares/validator.middleware.js";
+import {UserModel} from "../../../DB/Models/user.model.js";
 
 export const registerValidator = [
     check("name")
@@ -15,7 +16,14 @@ export const registerValidator = [
         .notEmpty()
         .withMessage("email is required")
         .isEmail()
-        .withMessage("must provide valid email"),
+        .withMessage("must provide valid email")
+
+        .custom(async value => {
+            const user = await UserModel.findOne({where : { email : value}});
+            if (user) {
+              throw new Error('this email is already exists');
+            }
+          }),
     
     check("password")
         .notEmpty()
