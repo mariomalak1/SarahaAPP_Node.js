@@ -1,6 +1,7 @@
 import {UserModel} from "../../DB/Models/user.model.js";
 import {hashPassword, verifyPassword} from "../Utilis/hashPassword.js";
 import {generateUserToken} from "../Utilis/userToken.js";
+import {sendEmail} from "../Utilis/sendMail.js";
 
 
 export const login = async (req, res, next) => {
@@ -31,6 +32,11 @@ export const register = async (req, res, next) => {
     const user = await UserModel.create({email, password: hashedPassword, fullname: name});
 
     // create random numbers and send it in email and verfiy user
+    let emailBody = `
+    Thank you for register in our service
+    your verfication code is : 123
+    `
+    sendEmail(user.email, `saraha email verfication`, emailBody);
 
     return res.status(201).send({data: {name, email}})
 }
