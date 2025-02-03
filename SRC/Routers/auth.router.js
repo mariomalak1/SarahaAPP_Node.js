@@ -1,9 +1,14 @@
 import {Router} from "express"; 
 
-import {registerValidator, loginValidator} from "../Utilis/validators/auth.validator.js";
-import {register, login} from "../Controllers/auth.controller.js";
+import {registerValidator, verfiyEmailValidator, loginValidator,
+    
+ } from "../Utilis/validators/auth.validator.js";
+import {register, login, verfiyEmail} from "../Controllers/auth.controller.js";
 
 export const router = Router();
 
 router.post("/register/", registerValidator, register);
+router.post("/verfiyMail/", verfiyEmailValidator, verfiyEmail);
 router.post("/login/", loginValidator, login);
+
+// router.
