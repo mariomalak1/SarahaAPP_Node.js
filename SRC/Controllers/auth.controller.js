@@ -65,43 +65,62 @@ export const login = async (req, res, next) => {
     return res.status(200).send({data: {message: "login done successfully", token}});
 }
 
-
 export const forgetPassword = async (req, res, next) => {
     const {email} = req.body;
 
     let resetCode = await ResetCodeModel.findOne({where: {emailUser :email} });
 
+    let newCode = await uniqueResetCode(email);
+
     if(resetCode){
-        if(isCodeExpired(resetCode)){
-            await resetCode.destroy();
-        }
+        resetCode.resetCode = newCode;
+    }
+    else{
+        resetCode = await ResetCodeModel.create({emailUser: email, resetCode: newCode});
     }
 
-    resetCode = await uniqueResetCode(email);
+    let emailBody = `
+    Reset Password Code is: ${resetCode.resetCode}
+    if you don't request for forget your password ignore the email
+    `;
 
-    return res.status(200).send({data: {resetCode: resetCode}});
+    sendEmail(user.email, `Saraha Reset Password`, emailBody);
+
+    return res.status(200).send({"message": "reset code for verfiy changing password sent"});
 }
 
-export const verfiyCodeSend = async (req, res, next) => {
+export const verfiyCodeSendChangePassword = async (req, res, next) => {
     const {email, resetCode, newPassword} = req.body;
 
     let code = await ResetCodeModel.findOne({where: {emailUser: email} });
     
+    // no reset code sent for this email
     if(!code){
-        // this mail is not register before
-        return res.status(400).send({data: "not valid reset code."});
+        return res.status(400).send({error: "not valid reset code."});
     }
 
-    if(code === resetCode){
-        if(isCodeExpired(code)){
-            code.resetCode = await uniqueResetCode();
-            return res.status(400).send({data: "reset code is expired another email is go you."});
-        }
-    }
-    else{
-        return res.status(400).send({data: "not valid reset code."});
+    let user = await UserModel.findOne({where: {email}});
+
+    // user isn't register yet
+    if(!user){
+        return res.status(400).send({error: "not valid reset code."});
     }
 
-    return 
+    // check that reset password is the same that send in mail
+    if(code !== resetCode){
+        return res.status(400).send({error: "invalid reset code"})
+    }
+    
+    // check on expiry of the reset code
+    if(isCodeExpired(code)){
+        return res.status(400).send({error: "reset code is expired"})
+    }
+
+    let hashNewPassword = hashPassword(newPassword);
+
+    user.password = hashNewPassword;
+    await user.save();
+
+    return res.status(200).send({message: "password has changed successfully"});
 }
 

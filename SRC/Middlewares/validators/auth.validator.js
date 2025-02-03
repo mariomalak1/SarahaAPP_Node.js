@@ -52,8 +52,6 @@ export const verfiyEmailValidator = [
 ]
 
 
-
-
 export const loginValidator = [  
     check("email")
         .notEmpty()
@@ -80,7 +78,7 @@ export const loginValidator = [
 ]
 
 
-export const resetCodeValidator = [
+export const forgetPasswordValidator = [
     check("email")
         .notEmpty()
         .withMessage("email is required")
@@ -89,7 +87,7 @@ export const resetCodeValidator = [
 ]
 
 
-export const verfiyCodeSendValidator = [
+export const verfiyCodeSendChangePasswordValidator = [
     check("email")
         .notEmpty()
         .withMessage("email is required")
@@ -98,7 +96,11 @@ export const verfiyCodeSendValidator = [
 
     check("newPassword")
         .notEmpty()
-        .withMessage("newPassword is required"),
+        .withMessage("newPassword is required")
+        .isLength({min: 8})
+        .withMessage("password min len 8")
+        .isLength({max: 60})
+        .withMessage("password max len 60"),
     
     check("resetCode")
         .notEmpty()
