@@ -2,7 +2,7 @@ import {Router} from "express";
 
 import {registerValidator, verfiyEmailValidator, loginValidator,
     
- } from "../Utilis/validators/auth.validator.js";
+ } from "../Middlewares/validators/auth.validator.js";
 import {register, login, verfiyEmail} from "../Controllers/auth.controller.js";
 
 export const router = Router();

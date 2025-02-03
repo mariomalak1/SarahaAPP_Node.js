@@ -67,7 +67,7 @@ export const loginValidator = [
               throw new Error('not registered mail');
             }
             if(!user.isVerfied){
-                return res.status(400).send({error: "not verfied mail"});
+                throw new Error('not verfied mail');
             }
           }),
 

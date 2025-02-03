@@ -1,4 +1,4 @@
-import {ResetCodeModel} from "resetCode.model.js";
+import {ResetCodeModel} from "../../DB/Models/resetCode.model.js";
 import dotenv from "dotenv";
 
 dotenv.config({path: "../../config.env"});
@@ -8,7 +8,7 @@ function getRandomInt(min, max) {
 }
 
 export function randomNumbersStr (lenOfStr) {
-    str = ``;
+    let str = ``;
     for (let index = 0; index < lenOfStr; index++) {
         str += getRandomInt(0, 9);
     }

@@ -10,10 +10,10 @@ export const register = async (req, res, next) => {
     const {email, name, password} = req.body;
 
     const hashedPassword = await hashPassword(password);
-
+    
     let randomNumbers = randomNumbersStr(6);
     const user = await UserModel.create({email, password: hashedPassword, fullname: name, verfiyNum: randomNumbers});
-
+    
     // create random numbers and send it in email and verfiy user
     let emailBody = `
     Thank you for register in our service
@@ -29,10 +29,14 @@ export const register = async (req, res, next) => {
 export const verfiyEmail = async (req, res, next) => {
     const {email, code} = req.body;
 
-    const user = await UserModel.findOne({email});
-
+    const user = await UserModel.findOne({where: {email}});
+    
     if(!user){
         return res.status(400).send({error: "not registered mail"});
+    }
+
+    if(user.isVerfied){
+        return res.status(200).send({error: "email verfication done"});
     }
 
     if(user.verfiyNum !== code){
@@ -49,7 +53,7 @@ export const verfiyEmail = async (req, res, next) => {
 
 export const login = async (req, res, next) => {
     const {email, password} = req.body;
-
+    
     const user = await UserModel.findOne({where: {email: email}});
 
     if(!verifyPassword(password, user.password)){
