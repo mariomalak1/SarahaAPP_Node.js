@@ -1,9 +1,6 @@
-import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 
-import {ApiError} from "./apiErrors.js";
 import {UserModel} from "../../DB/Models/user.model.js";
-import {verifyPassword} from "./hashPassword.js";
 
 export const generateUserToken = (email, pass) => {
     return jwt.sign({email, pass}, process.env.SECRET_KEY, { expiresIn: process.env.TOKEN_EXPIRATION_TIME });
@@ -28,8 +25,7 @@ export const verifyToken = async (req, res, next) => {
         return res.sendStatus(403);
     }
 
-    // check that password is same now as when token generated
-    
+    // check that password is same now as when token generated    
     if(decoded.pass !== user.password)
         return res.status(403).json({"error": "try to login agian"});
 

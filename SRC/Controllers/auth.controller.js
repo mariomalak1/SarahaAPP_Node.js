@@ -56,7 +56,7 @@ export const login = async (req, res, next) => {
     
     const user = await UserModel.findOne({where: {email: email}});
 
-    if(!verifyPassword(password, user.password)){
+    if(! await verifyPassword(password, user.password)){
         return res.status(400).send({error: "may be invalid password or mail"});
     }
 

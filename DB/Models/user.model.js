@@ -41,4 +41,4 @@ export const UserModel = sequelize.define("User", {
         type: DataTypes.STRING,
         allowNull: true
     } 
-});
+}, {timestamps: true, paranoid: true});

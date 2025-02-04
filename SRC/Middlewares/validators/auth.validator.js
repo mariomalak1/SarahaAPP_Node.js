@@ -8,9 +8,9 @@ export const registerValidator = [
         .notEmpty()
         .withMessage("name is required")
         .isLength({ min: 3 })
-        .withMessage("too short product name")
+        .withMessage("too short name")
         .isLength({ max: 50 })
-        .withMessage("too long product name"),
+        .withMessage("too long name"),
     
     check("email")
         .notEmpty()
