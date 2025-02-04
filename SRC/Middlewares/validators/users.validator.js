@@ -42,3 +42,11 @@ export const updateProfiledValidator = [
 
     validator
 ]
+
+export const deleteAccountValidator = [
+    check("password")
+        .notEmpty()
+        .withMessage("password is required"),
+
+    validator
+]

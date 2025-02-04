@@ -56,6 +56,16 @@ export const updateMail = async (req, res, next) => {
     return res.status(200).send({data: {newEmail}, message: "email changed successfully, you need to verfiy it"});
 }
 
+// need password to make this action 
+// (soft delete)
 export const deleteAccount = async (req, res, next) => {
+    const {password} = req.body;
 
+     if(! await verifyPassword(password, req.user.password)){
+        return res.status(400).send({error: "password is incorrect"});
+    }
+
+    req.user.destroy();
+
+    return res.status(200).send({message: "account deleted successfully"});
 }
