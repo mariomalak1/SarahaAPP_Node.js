@@ -13,8 +13,6 @@ const transporter = nodemailer.createTransport({
 });
 
 export async function sendEmail(toMail, subject, body) {
-  console.log(process.env.SENDER_EMAIL);
-  
     try {
       const info = await transporter.sendMail({
         from: process.env.SENDER_EMAIL,

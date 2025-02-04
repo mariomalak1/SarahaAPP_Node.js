@@ -83,7 +83,9 @@ export const forgetPasswordValidator = [
         .notEmpty()
         .withMessage("email is required")
         .isEmail()
-        .withMessage("must provide valid email")
+        .withMessage("must provide valid email"),
+
+    validator
 ]
 
 
@@ -105,5 +107,7 @@ export const verfiyCodeSendChangePasswordValidator = [
     check("resetCode")
         .notEmpty()
         .withMessage("newPassword is required"),
+
+    validator
 ]
 

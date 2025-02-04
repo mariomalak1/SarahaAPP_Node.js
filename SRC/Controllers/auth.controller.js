@@ -68,24 +68,32 @@ export const login = async (req, res, next) => {
 export const forgetPassword = async (req, res, next) => {
     const {email} = req.body;
 
+    const user = await UserModel.findOne({where: {email}});
+
+    // user not register on system, but we will send him that the mail sent for this user
+    if(!user){
+        return res.status(200).send({"message": "reset code for verfiy changing password sent"});
+    }
+
     let resetCode = await ResetCodeModel.findOne({where: {emailUser :email} });
 
-    let newCode = await uniqueResetCode(email);
+    let newCode = await uniqueResetCode();
 
     if(resetCode){
         resetCode.resetCode = newCode;
+        resetCode.save();
     }
     else{
         resetCode = await ResetCodeModel.create({emailUser: email, resetCode: newCode});
     }
 
     let emailBody = `
-    Reset Password Code is: ${resetCode.resetCode}
+    Reset Password Code is: ${newCode}
     if you don't request for forget your password ignore the email
     `;
 
     sendEmail(user.email, `Saraha Reset Password`, emailBody);
-
+    
     return res.status(200).send({"message": "reset code for verfiy changing password sent"});
 }
 
@@ -107,16 +115,17 @@ export const verfiyCodeSendChangePassword = async (req, res, next) => {
     }
 
     // check that reset password is the same that send in mail
-    if(code !== resetCode){
+    if(code.resetCode !== resetCode){
         return res.status(400).send({error: "invalid reset code"})
     }
     
     // check on expiry of the reset code
-    if(isCodeExpired(code)){
+    if(await isCodeExpired(code)){
         return res.status(400).send({error: "reset code is expired"})
     }
 
-    let hashNewPassword = hashPassword(newPassword);
+    
+    let hashNewPassword = await hashPassword(newPassword);
 
     user.password = hashNewPassword;
     await user.save();
