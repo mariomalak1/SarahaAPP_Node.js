@@ -29,3 +29,16 @@ export const updatePasswordValidator = [
 
     validator
 ]
+
+
+export const updateProfiledValidator = [
+    check("name")
+        .notEmpty()
+        .withMessage("name is required")
+        .isLength({ min: 3 })
+        .withMessage("too short name")
+        .isLength({ max: 50 })
+        .withMessage("too long name"),
+
+    validator
+]
