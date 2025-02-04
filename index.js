@@ -2,8 +2,7 @@ import Express from "express";
 import dotenv from "dotenv";
 
 import {sequelize, dbConnection} from "./DB/dbConnection.js"
-import {dbModels} from "./DB/dbModels.js"
-// import {router as apiRouter} from "./SRC/Routers/index.router.js";
+import {router as apiRouter} from "./SRC/Routers/apis.router.js";
 import {ApiError} from "./SRC/Utilis/apiErrors.js";
 import globalErrorHandle from "./SRC/Middlewares/globalErrorHandle.middleware.js";
 
@@ -14,6 +13,8 @@ const app = Express();
 app.use(Express.json());
 
 // sequelize.sync({"force":true});
+
+app.use("/api/v1", apiRouter);
 
 // handle invalid routers
 app.use("*", (req, res, next) => {

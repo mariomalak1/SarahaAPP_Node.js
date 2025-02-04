@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 
 import {ApiError} from "./apiErrors.js";
 import {UserModel} from "../../DB/Models/user.model.js";
-import {verifyPassword} from "./Utilis/hashPassword.js";
+import {verifyPassword} from "./hashPassword.js";
 
 export const generateUserToken = (email, pass) => {
     return jwt.sign({email, pass}, process.env.SECRET_KEY, { expiresIn: process.env.TOKEN_EXPIRATION_TIME });
