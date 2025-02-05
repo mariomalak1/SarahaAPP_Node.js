@@ -10,6 +10,14 @@ export const editMessagePrivacyValidator = [
     validator
 ]
 
+export const deleteMessageValidator = [
+    check("messageId")
+        .notEmpty()
+        .withMessage("message id is required"),
+
+    validator
+]
+
 export const sendMessageForUserValidator = [
     check("userEmail")
         .notEmpty()

@@ -66,9 +66,9 @@ export const deleteAccount = async (req, res, next) => {
         return res.status(400).send({error: "password is incorrect"});
     }
 
-    await MessageModel.destroy({where: {userId: req.user.id}});
+    await MessageModel.destroy({where: {UserId: req.user.id}});
 
     req.user.destroy();
 
-    return res.status(200).send({message: "account deleted successfully"});
+    return res.status(204).send({message: "account deleted successfully"});
 }
