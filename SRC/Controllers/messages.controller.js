@@ -1,4 +1,5 @@
 import {MessageModel} from "../../DB/Models/message.model.js";
+import {UserModel} from "../../DB/Models/user.model.js";
 import {paginate} from "../Utilis/paginationForModel.js";
 
 export const getAllMessages = async (req, res, next) => {
@@ -36,11 +37,11 @@ export const editMessagePrivacy = async (req, res, next) => {
 }
 
 export const sendMessageForUser = async (req, res, next) => {
-    const {password} = req.body;
+    const {userEmail} = req.body;
 
-     if(! await verifyPassword(password, req.user.password)){
-        return res.status(400).send({error: "password is incorrect"});
-    }
+    const user = await UserModel.findOne({where: {email: userEmail}});
+
+    if(user)
 
     req.user.destroy();
 
