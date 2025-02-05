@@ -1,9 +1,10 @@
-export const paginate = async (request, Model, whereClues = null, defualtPage = 1, defualtPageSize = 10) => {
+export const paginate = async (request, Model, essentialLogicWhereClues= null, whereClues = null, defualtPage = 1, defualtPageSize = 10) => {
     let {page, limit} = request.query;
     let offset;
-
+    
     // number of records
-    const numOfRecords = await Model.count();
+    const numOfRecords = await Model.count({where: essentialLogicWhereClues || 1});
+
     // get maximum number of pages
     const maxPage = Math.ceil(numOfRecords / limit) || 0;
 
@@ -51,7 +52,7 @@ export const paginate = async (request, Model, whereClues = null, defualtPage = 
 
     const records = await Model.findAll(
     {
-        where: whereClues || 1,
+        where: ({...essentialLogicWhereClues, ...whereClues}) || 1,
         offset,
         limit
     });

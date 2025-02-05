@@ -12,7 +12,7 @@ const app = Express();
 
 app.use(Express.json());
 
-sequelize.sync({"force":true});
+// sequelize.sync({"force":true});
 
 app.use("/api/v1", apiRouter);
 

@@ -23,6 +23,10 @@ export const MessageModel = sequelize.define("Message", {
                 message: "message must be between 1 and 3000 characters long"
             }
         }
+    },
+    privacy:{
+        type: DataTypes.BOOLEAN,
+        default: false
     }
 });
 
