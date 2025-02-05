@@ -26,10 +26,10 @@ export const MessageModel = sequelize.define("Message", {
     },
     privacy:{
         type: DataTypes.BOOLEAN,
-        default: false
+        defualt: 0
     }
 });
 
-MessageModel.belongsTo(UserModel);
+MessageModel.belongsTo(UserModel, { foreignKey: 'userId', allowNull: false });
 UserModel.hasMany(MessageModel);
 

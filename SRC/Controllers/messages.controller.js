@@ -1,4 +1,5 @@
 import {MessageModel} from "../../DB/Models/message.model.js";
+import {UserModel} from "../../DB/Models/user.model.js";
 import {paginate} from "../Utilis/paginationForModel.js";
 
 export const getAllMessages = async (req, res, next) => {
@@ -26,7 +27,12 @@ export const editMessagePrivacy = async (req, res, next) => {
     const message = await MessageModel.findByPk(messageId);
     
     if(!message){
-        return res.status(400).send({error: "no message with this id"});
+        return res.status(404).send({error: "no message with this id"});
+    }
+
+    // message is not for this user
+    if(message.userId != req.user.id){
+        return res.status(404).send({message: "no message with this id"});
     }
 
     message.privacy = ! message.privacy;
@@ -36,13 +42,15 @@ export const editMessagePrivacy = async (req, res, next) => {
 }
 
 export const sendMessageForUser = async (req, res, next) => {
-    const {password} = req.body;
+    const {userEmail, content, anonymousName} = req.body;
 
-     if(! await verifyPassword(password, req.user.password)){
-        return res.status(400).send({error: "password is incorrect"});
+    const user = await UserModel.findOne({where: {email: userEmail}});
+
+    if(!user){
+        return res.status(404).send({message: "not found this user"});
     }
 
-    req.user.destroy();
+    const message = await MessageModel.create({userId: user.id, content, anonymousName});
 
-    return res.status(200).send({message: "account deleted successfully"});
+    return res.status(200).send({message: "message created successfully", data: message});
 }
