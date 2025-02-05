@@ -1,4 +1,5 @@
 import {UserModel} from "../../DB/Models/user.model.js";
+import {MessageModel} from "../../DB/Models/message.model.js";
 import {sendEmail} from "../Utilis/sendMail.js";
 import {randomNumbersStr} from "../Utilis/resetCode.js";
 import {verifyPassword, hashPassword} from "../Utilis/hashPassword.js";
@@ -64,6 +65,8 @@ export const deleteAccount = async (req, res, next) => {
      if(! await verifyPassword(password, req.user.password)){
         return res.status(400).send({error: "password is incorrect"});
     }
+
+    await MessageModel.destroy({where: {userId: req.user.id}});
 
     req.user.destroy();
 

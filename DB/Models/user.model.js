@@ -3,6 +3,10 @@ import {DataTypes} from "sequelize";
 import {sequelize} from "../dbConnection.js";
 
 export const UserModel = sequelize.define("User", {
+    id: {
+        type: DataTypes.STRING,
+        primaryKey: true
+    },
     fullname: {
         type: DataTypes.STRING,
         allowNull: false,

@@ -1,3 +1,5 @@
+import {nanoid} from "nanoid";
+
 import {MessageModel} from "../../DB/Models/message.model.js";
 import {UserModel} from "../../DB/Models/user.model.js";
 import {paginate} from "../Utilis/paginationForModel.js";
@@ -50,7 +52,9 @@ export const sendMessageForUser = async (req, res, next) => {
         return res.status(404).send({message: "not found this user"});
     }
 
-    const message = await MessageModel.create({userId: user.id, content, anonymousName});
+    const messageId = nanoid(7);
+
+    const message = await MessageModel.create({id: messageId, userId: user.id, content, anonymousName});
 
     return res.status(200).send({message: "message created successfully", data: message});
 }

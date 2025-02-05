@@ -5,9 +5,7 @@ import validator from "../validator.middleware.js";
 export const editMessagePrivacyValidator = [
     check("messageId")
         .notEmpty()
-        .withMessage("message id is required")
-        .isInt()
-        .withMessage("it must be numeric value"),
+        .withMessage("message id is required"),
 
     validator
 ]

@@ -1,3 +1,5 @@
+import {nanoid} from "nanoid";
+
 import {UserModel} from "../../DB/Models/user.model.js";
 import {ResetCodeModel} from "../../DB/Models/resetCode.model.js";
 import {hashPassword, verifyPassword} from "../Utilis/hashPassword.js";
@@ -12,7 +14,10 @@ export const register = async (req, res, next) => {
     const hashedPassword = await hashPassword(password);
     
     let randomNumbers = randomNumbersStr(6);
-    const user = await UserModel.create({email, password: hashedPassword, fullname: name, verfiyNum: randomNumbers});
+    
+    const userId = nanoid(7);
+
+    const user = await UserModel.create({id: userId, email, password: hashedPassword, fullname: name, verfiyNum: randomNumbers});
     
     // create random numbers and send it in email and verfiy user
     let emailBody = `

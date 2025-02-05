@@ -4,6 +4,10 @@ import {sequelize} from "../dbConnection.js";
 import {UserModel} from "./user.model.js";
 
 export const MessageModel = sequelize.define("Message", {
+    id: {
+        type: DataTypes.STRING,
+        primaryKey: true
+    },
     anonymousName : {
         type: DataTypes.STRING,
         allowNull: true,
@@ -27,9 +31,15 @@ export const MessageModel = sequelize.define("Message", {
     privacy:{
         type: DataTypes.BOOLEAN,
         defualt: 0
-    }
+    },
 });
 
-MessageModel.belongsTo(UserModel, { foreignKey: 'userId', allowNull: false });
+MessageModel.belongsTo(UserModel, {
+    foreignKey: {
+        allowNull: false,
+        onDelete: 'SET NULL',
+        onUpdate: 'RESTRICT'
+    }
+});
 UserModel.hasMany(MessageModel);
 
