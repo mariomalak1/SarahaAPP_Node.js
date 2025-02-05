@@ -30,6 +30,11 @@ export const editMessagePrivacy = async (req, res, next) => {
         return res.status(404).send({error: "no message with this id"});
     }
 
+    // message is not for this user
+    if(message.userId != req.user.id){
+        return res.status(404).send({message: "no message with this id"});
+    }
+
     message.privacy = ! message.privacy;
     message.save();
 

@@ -26,7 +26,7 @@ export const MessageModel = sequelize.define("Message", {
     },
     privacy:{
         type: DataTypes.BOOLEAN,
-        default: false
+        defualt: 0
     }
 });
 
