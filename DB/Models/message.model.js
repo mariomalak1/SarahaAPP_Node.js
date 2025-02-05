@@ -30,6 +30,6 @@ export const MessageModel = sequelize.define("Message", {
     }
 });
 
-MessageModel.belongsTo(UserModel);
+MessageModel.belongsTo(UserModel, { foreignKey: 'userId', allowNull: false });
 UserModel.hasMany(MessageModel);
 

@@ -42,12 +42,10 @@ export const sendMessageForUser = async (req, res, next) => {
     const user = await UserModel.findOne({where: {email: userEmail}});
 
     if(!user){
-        return res.status(400).send({message: "invalid user mail"});
+        return res.status(404).send({message: "not found this user"});
     }
 
-    const message = await MessageModel.create({user: user, content, anonymousName});
+    const message = await MessageModel.create({userId: user.id, content, anonymousName});
 
-    
-
-    return res.status(200).send({message: "account deleted successfully"});
+    return res.status(200).send({message: "message created successfully", data: message});
 }

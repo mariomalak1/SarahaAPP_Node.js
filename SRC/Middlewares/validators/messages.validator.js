@@ -28,6 +28,7 @@ export const sendMessageForUserValidator = [
         .withMessage("message content is too long"),
         
     check("anonymousName")
+        .optional()
         .isLength({min: 1})
         .withMessage("anonymous name is too short")
         .isLength({max: 50})
