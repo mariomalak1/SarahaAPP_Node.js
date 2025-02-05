@@ -27,7 +27,7 @@ export const editMessagePrivacy = async (req, res, next) => {
     const message = await MessageModel.findByPk(messageId);
     
     if(!message){
-        return res.status(400).send({error: "no message with this id"});
+        return res.status(404).send({error: "no message with this id"});
     }
 
     message.privacy = ! message.privacy;
@@ -37,13 +37,17 @@ export const editMessagePrivacy = async (req, res, next) => {
 }
 
 export const sendMessageForUser = async (req, res, next) => {
-    const {userEmail} = req.body;
+    const {userEmail, content, anonymousName} = req.body;
 
     const user = await UserModel.findOne({where: {email: userEmail}});
 
-    if(user)
+    if(!user){
+        return res.status(400).send({message: "invalid user mail"});
+    }
 
-    req.user.destroy();
+    const message = await MessageModel.create({user: user, content, anonymousName});
+
+    
 
     return res.status(200).send({message: "account deleted successfully"});
 }

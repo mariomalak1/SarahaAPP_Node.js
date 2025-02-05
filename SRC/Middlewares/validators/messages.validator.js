@@ -15,9 +15,24 @@ export const editMessagePrivacyValidator = [
 export const sendMessageForUserValidator = [
     check("userEmail")
         .notEmpty()
-        .withMessage("new email is required")
+        .withMessage("user email is required")
         .isEmail()
         .withMessage("must provide valid email"),
+        
+    check("content")
+        .notEmpty()
+        .withMessage("message content is required")
+        .isLength({min: 1})
+        .withMessage("message content is too short")
+        .isLength({max: 3000})
+        .withMessage("message content is too long"),
+        
+    check("anonymousName")
+        .isLength({min: 1})
+        .withMessage("anonymous name is too short")
+        .isLength({max: 50})
+        .withMessage("anonymous name is too long"),
+    
         
     validator
 ]
