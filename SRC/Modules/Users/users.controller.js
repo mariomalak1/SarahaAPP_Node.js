@@ -1,8 +1,8 @@
-import {UserModel} from "../../DB/Models/user.model.js";
-import {MessageModel} from "../../DB/Models/message.model.js";
-import {sendEmail} from "../Utilis/sendMail.js";
-import {randomNumbersStr} from "../Utilis/resetCode.js";
-import {verifyPassword, hashPassword} from "../Utilis/hashPassword.js";
+import {UserModel} from "../../../DB/Models/user.model.js";
+import {MessageModel} from "../../../DB/Models/message.model.js";
+import {sendEmail} from "../../Utilis/sendMail.js";
+import {randomNumbersStr} from "../../Utilis/resetCode.js";
+import {verifyPassword, hashPassword} from "../../Utilis/hashPassword.js";
 
 export const updateProfile = async (req, res, next) => {
     const {name} = req.body;

@@ -1,8 +1,8 @@
 import {nanoid} from "nanoid";
 
-import {MessageModel} from "../../DB/Models/message.model.js";
-import {UserModel} from "../../DB/Models/user.model.js";
-import {paginate} from "../Utilis/paginationForModel.js";
+import {MessageModel} from "../../../DB/Models/message.model.js";
+import {UserModel} from "../../../DB/Models/user.model.js";
+import {paginate} from "../../Utilis/paginationForModel.js";
 
 export const getAllMessages = async (req, res, next) => {
     let whereClue = {

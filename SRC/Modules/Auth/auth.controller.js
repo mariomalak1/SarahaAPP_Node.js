@@ -1,11 +1,11 @@
 import {nanoid} from "nanoid";
 
-import {UserModel} from "../../DB/Models/user.model.js";
-import {ResetCodeModel} from "../../DB/Models/resetCode.model.js";
-import {hashPassword, verifyPassword} from "../Utilis/hashPassword.js";
-import {generateUserToken} from "../Utilis/userToken.js";
-import {sendEmail} from "../Utilis/sendMail.js";
-import {randomNumbersStr, uniqueResetCode, isCodeExpired} from "../Utilis/resetCode.js";
+import {UserModel} from "../../../DB/Models/user.model.js";
+import {ResetCodeModel} from "../../../DB/Models/resetCode.model.js";
+import {hashPassword, verifyPassword} from "../../Utilis/hashPassword.js";
+import {generateUserToken} from "../../Utilis/userToken.js";
+import {sendEmail} from "../../Utilis/sendMail.js";
+import {randomNumbersStr, uniqueResetCode, isCodeExpired} from "../../Utilis/resetCode.js";
 
 
 export const register = async (req, res, next) => {

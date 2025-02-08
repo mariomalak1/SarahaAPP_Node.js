@@ -2,7 +2,7 @@ import Express from "express";
 import dotenv from "dotenv";
 
 import {sequelize, dbConnection} from "./DB/dbConnection.js"
-import {router as apiRouter} from "./SRC/Routers/apis.router.js";
+import {router as apiRouter} from "./SRC/Routers/apisV1.router.js";
 import {ApiError} from "./SRC/Utilis/apiErrors.js";
 import globalErrorHandle from "./SRC/Middlewares/globalErrorHandle.middleware.js";
 

@@ -1,8 +1,8 @@
 import {Router} from "express"; 
 
-import { updateMail, updatePassword, updateProfile, deleteAccount} from "../Controllers/users.controller.js";
+import { updateMail, updatePassword, updateProfile, deleteAccount} from "./users.controller.js";
 import { updateMailValidator, updatePasswordValidator , updateProfiledValidator, deleteAccountValidator}
- from "../Middlewares/validators/users.validator.js";
+ from "./users.validator.js";
 
 export const router = Router();
 

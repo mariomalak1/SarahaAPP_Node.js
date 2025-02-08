@@ -1,6 +1,6 @@
 import { check} from "express-validator";
 
-import validator from "../validator.middleware.js";
+import validator from "../../Middlewares/validator.middleware.js";
 import {UserModel} from "../../../DB/Models/user.model.js";
 
 export const updateMailValidator = [

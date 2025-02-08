@@ -1,6 +1,6 @@
 import { check} from "express-validator";
 
-import validator from "../validator.middleware.js";
+import validator from "../../Middlewares/validator.middleware.js";
 
 export const editMessagePrivacyValidator = [
     check("messageId")

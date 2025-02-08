@@ -1,10 +1,10 @@
 import {Router} from "express"; 
 
-import { verifyToken } from "../Utilis/userToken.js";
+import { verifyToken } from "../../Utilis/userToken.js";
 
-import {editMessagePrivacyValidator, sendMessageForUserValidator, deleteMessageValidator} from "../Middlewares/validators/messages.validator.js";
+import {editMessagePrivacyValidator, sendMessageForUserValidator, deleteMessageValidator} from "./messages.validator.js";
 
-import {sendMessageForUser, editMessagePrivacy, getAllMessages, deleteMessage} from "../Controllers/messages.controller.js";
+import {sendMessageForUser, editMessagePrivacy, getAllMessages, deleteMessage} from "./messages.controller.js";
 
 export const router = Router();
 
