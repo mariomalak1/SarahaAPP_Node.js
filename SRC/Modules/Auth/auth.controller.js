@@ -135,6 +135,8 @@ export const verfiyCodeSendChangePassword = async (req, res, next) => {
     user.password = hashNewPassword;
     await user.save();
 
+    code.destroy();
+
     return res.status(200).send({message: "password has changed successfully"});
 }
 
